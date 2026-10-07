@@ -1,4 +1,4 @@
-﻿import os
+import os
 from dataclasses import dataclass
 
 from dotenv import load_dotenv
@@ -8,7 +8,7 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class Settings:
-    app_name: str = os.getenv("APP_NAME", "Dentara")
+    app_name: str = os.getenv("APP_NAME", "Qerivo")
     cors_origins: list[str] = None
 
     def __post_init__(self) -> None:

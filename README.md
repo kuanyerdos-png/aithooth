@@ -1,6 +1,6 @@
-﻿# Dentara
+# Qerivo
 
-Dentara is an MVP landing page and FastAPI starter for an AI assistant built for dental clinics. The included chat is a deterministic mock service, so it is safe to run locally without a paid AI provider.
+Qerivo is an MVP landing page and FastAPI starter for an AI assistant built for dental clinics. The included chat is a deterministic mock service, so it is safe to run locally without a paid AI provider.
 
 ## Run locally
 
