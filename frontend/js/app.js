@@ -99,6 +99,8 @@ function applyLanguage(lang) {
   const r = t.recovery;
   set("#recovery .eyebrow", r.eyebrow); set("#recovery h2", r.title); set("#recovery .section-heading p", r.intro); set("#recovery .text-link", `${r.link} <span>↗</span>`);
   document.querySelectorAll("#recovery .flow-node").forEach((element, index) => { element.querySelector("strong").textContent = r.flow[index][0]; element.querySelector("small").textContent = r.flow[index][1]; });
+  set(".visual-header span", r.dashboardEyebrow); set(".visual-header strong", r.dashboardRange); set(".visual-metric small", r.dashboardLabel); set(".visual-metric span", r.metrics[5][1]);
+  document.querySelectorAll(".visual-flow>div").forEach((element, index) => { element.querySelector("strong").textContent = r.flow[index][0]; element.querySelector("small").textContent = r.flow[index][1]; });
   set(".segments-section .eyebrow", r.segmentsEyebrow); set(".segments-section h2", r.segmentsTitle); set(".segments-section .section-heading p", r.segmentsIntro);
   document.querySelectorAll(".segment-card").forEach((element, index) => { element.querySelector("h3").textContent = r.segments[index][0]; element.querySelector("p").textContent = r.segments[index][1]; element.querySelector(".segment-signal").textContent = r.segments[index][2]; });
   set(".workflow-section .eyebrow", r.workflowEyebrow); set(".workflow-section h2", r.workflowTitle); set(".workflow-section .section-heading p", r.workflowIntro);
