@@ -1,4 +1,4 @@
-class MockChatService:
+﻿class MockChatService:
     """Temporary deterministic responder; replace with an LLM adapter later."""
 
     def reply_to(self, message: str, language: str = "en") -> str:
@@ -9,7 +9,7 @@ class MockChatService:
             if "запис" in normalized or "приём" in normalized:
                 return "Конечно! В какой день и время вам удобно? Сотрудник клиники подтвердит запись."
             if "привет" in normalized or "здрав" in normalized:
-                return "Здравствуйте! Я AITooth, ассистент клиники. Могу ответить на вопросы или помочь с записью."
+                return "Здравствуйте! Я Aitooth, ассистент клиники. Могу ответить на вопросы или помочь с записью."
             return "Спасибо за сообщение! Я помогу с вопросами о лечении, записью и дальнейшими шагами."
         if language == "kk":
             if "баға" in normalized or "құн" in normalized:
@@ -17,7 +17,7 @@ class MockChatService:
             if "жазыл" in normalized or "қабылдау" in normalized:
                 return "Әрине! Сізге қай күн мен уақыт ыңғайлы? Клиника қызметкері жазылуды растайды."
             if "сәлем" in normalized or "салем" in normalized:
-                return "Сәлеметсіз бе! Мен AITooth, клиника ассистентімін. Сұрақтарға жауап беріп, қабылдауға жазуға көмектесемін."
+                return "Сәлеметсіз бе! Мен Aitooth, клиника ассистентімін. Сұрақтарға жауап беріп, қабылдауға жазуға көмектесемін."
             return "Хабарламаңызға рақмет! Ем, қабылдауға жазылу және келесі қадамдар туралы көмектесе аламын."
         if "price" in normalized or "cost" in normalized:
             return (
@@ -31,7 +31,7 @@ class MockChatService:
             )
         if "hello" in normalized or "hi" in normalized:
             return (
-                "Hi! I'm AITooth, your clinic assistant. I can answer questions or help you request "
+                "Hi! I'm Aitooth, your clinic assistant. I can answer questions or help you request "
                 "an appointment. What can I help with today?"
             )
         return (
@@ -41,3 +41,4 @@ class MockChatService:
 
 
 chat_service = MockChatService()
+

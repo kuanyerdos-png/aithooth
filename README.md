@@ -1,6 +1,6 @@
-# AITooth
+﻿# Aitooth
 
-AITooth is an MVP landing page and FastAPI starter for an AI assistant built for dental clinics. The included chat is a deterministic mock service, so it is safe to run locally without a paid AI provider.
+Aitooth is an MVP landing page and FastAPI starter for an AI assistant built for dental clinics. The included chat is a deterministic mock service, so it is safe to run locally without a paid AI provider.
 
 ## Run locally
 
@@ -27,3 +27,4 @@ The landing page supports English, Russian, and Kazakh via the language switcher
 - `frontend` contains framework-free HTML, CSS, and JavaScript.
 
 Copy `.env.example` to `.env` to customize the app name or CORS origins. SQLite/PostgreSQL persistence is intentionally not required for this initial MVP; a repository layer can be introduced when clinic data is added.
+
