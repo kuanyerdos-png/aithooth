@@ -179,6 +179,7 @@ body { background: #fff; color: var(--ink); overflow-x: hidden; }
 .segment-card, .workflow-grid article, .feature-card, .process-card, .architecture-node { transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
 .segment-card:hover, .workflow-grid article:hover, .feature-card:hover, .process-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(28,24,51,.06); }
 .value-band { padding: 104px 0 108px; border-bottom: 1px solid var(--line); text-align: center; }
+.process-section, .workflows-section { display: none; }
 .value-band p { margin: 0; color: var(--muted); font-family: var(--font-display); font-size: clamp(25px, 3.4vw, 42px); letter-spacing: -1.8px; line-height: 1.12; }
 .value-band strong { display: block; margin-top: 8px; color: var(--ink); font-family: var(--font-display); font-size: clamp(25px, 3.4vw, 42px); letter-spacing: -1.8px; }
 .opportunity-panel { display: flex; align-items: center; gap: 12px; margin: 28px 0 25px; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: #fafafa; }
