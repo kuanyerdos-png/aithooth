@@ -203,6 +203,7 @@ body { background: #fff; color: var(--ink); overflow-x: hidden; }
 .illustrative-note { margin: 20px 0 0; color: #96949e; font-size: 11px; text-align: center; }
 .booking-section { border-bottom: 1px solid var(--line); }
 .booking-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 85px; align-items: center; }
+.booking-layout > * { min-width: 0; max-width: 100%; }
 .booking-layout .section-heading p { line-height: 1.7; }
 .booking-card-ui { padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: #fafafa; }
 .booking-label, .calendar-top span { color: #8a8792; font-size: 9px; letter-spacing: 1px; }
@@ -214,6 +215,7 @@ body { background: #fff; color: var(--ink); overflow-x: hidden; }
 .calendar-card { margin-top: 8px; padding: 16px; border: 1px solid #dcd9e7; border-radius: 10px; background: #fff; box-shadow: 0 12px 30px rgba(28,24,51,.05); }
 .calendar-top { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 13px; border-bottom: 1px solid var(--line); }
 .calendar-top b { color: var(--purple); font-size: 9px; font-weight: 600; }
+.calendar-top span { min-width: 0; overflow-wrap: anywhere; }
 .calendar-event { display: flex; align-items: center; gap: 11px; padding-top: 15px; }
 .calendar-check { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 8px; background: #f1f0ff; color: var(--purple); }
 .calendar-event strong, .calendar-event small { display: block; }
@@ -245,6 +247,7 @@ body { background: #fff; color: var(--ink); overflow-x: hidden; }
   .revenue-funnel>div { width: 100%; }
   .revenue-funnel>i { transform: rotate(90deg); }
   .booking-card-ui { padding: 15px; }
+  .booking-layout > *, .booking-card-ui { min-width: 0; max-width: 100%; overflow: hidden; }
   .segments-grid, .workflow-grid { grid-template-columns: 1fr; }
   .segment-card { min-height: 170px; }
   .workflow-grid article { min-height: 145px; }
