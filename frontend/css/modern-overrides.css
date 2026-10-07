@@ -237,7 +237,7 @@ body { background: #fff; color: var(--ink); overflow-x: hidden; }
   .workflow-pillars { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
-  .container { width: calc(100% - 44px); }
+  .container { width: calc(100% - 52px); max-width: calc(100% - 52px); }
   .value-band { padding: 76px 20px; }
   .opportunity-panel { align-items: stretch; flex-direction: column; }
   .opportunity-panel>i { transform: rotate(90deg); text-align: center; }
