@@ -86,8 +86,36 @@ const translations = {
   }
 };
 
+const extraCopy = {
+  en: {
+    valueFirst: "Your clinic already has the patients.", valueSecond: "We bring them back.",
+    recoveryTitle: "Dentara finds the patients <em>you're losing.</em>", recoveryIntro: "Dentara analyzes your existing database, finds recovery opportunities, and helps bring patients back into care.",
+    database: "Patient database", patients: "patients", opportunities: "Recovery opportunities", toRecover: "patients to recover", visualFlow: [["Patient database", "2,450 records"], ["Patients to recover", "387 identified"], ["Personalized conversation", "312 contacted"], ["Appointment booked", "64 appointments"]],
+    outcomes: "Business outcomes", outcomesTitle: "See the revenue <em>you're recovering.</em>", outcomesIntro: "Follow every recovery opportunity from first contact to completed visit.",
+    funnel: ["Patients identified", "Contacted", "Replied", "Booked", "Visited", "Revenue recovered"], illustrative: "Illustrative product data only — not a customer result.",
+    bookingEyebrow: "Booking integration", bookingTitle: "From a reply to a <em>confirmed time.</em>", bookingIntro: "Dentara can help patients find an available time, then pass the booking to the clinic's calendar or booking system.", conversationLabel: "PATIENT CONVERSATION", calendarLabel: "GOOGLE CALENDAR / BOOKING SYSTEM", calendarNote: "Integration example", confirmed: "Check-up with Aigerim", confirmedTime: "Thursday · 18:30 · Confirmed"
+  },
+  ru: {
+    valueFirst: "У вашей клиники уже есть пациенты.", valueSecond: "Мы возвращаем их.",
+    recoveryTitle: "Dentara находит пациентов, <em>которых вы теряете.</em>", recoveryIntro: "Dentara анализирует существующую базу, находит возможности для возврата и помогает пациентам снова прийти на лечение.",
+    database: "База пациентов", patients: "пациентов", opportunities: "Возможности возврата", toRecover: "пациентов для возврата", visualFlow: [["База пациентов", "2 450 записей"], ["Пациенты для возврата", "387 найдены"], ["Персональный диалог", "312 контактов"], ["Запись подтверждена", "64 записи"]],
+    outcomes: "Бизнес-результат", outcomesTitle: "Смотрите, какую выручку <em>вы возвращаете.</em>", outcomesIntro: "Отслеживайте путь каждого пациента от первого контакта до визита.",
+    funnel: ["Пациенты найдены", "Связались", "Ответили", "Записались", "Пришли", "Возвращённая выручка"], illustrative: "Демонстрационные данные продукта — не результат клиента.",
+    bookingEyebrow: "Интеграция записи", bookingTitle: "От ответа к <em>подтверждённому времени.</em>", bookingIntro: "Dentara помогает найти свободное время и передаёт запись в календарь или систему бронирования клиники.", conversationLabel: "ДИАЛОГ С ПАЦИЕНТОМ", calendarLabel: "GOOGLE CALENDAR / СИСТЕМА ЗАПИСИ", calendarNote: "Пример интеграции", confirmed: "Осмотр с Айгерим", confirmedTime: "Четверг · 18:30 · Подтверждено"
+  },
+  kk: {
+    valueFirst: "Клиникаңызда пациенттер қазірдің өзінде бар.", valueSecond: "Біз оларды қайтарамыз.",
+    recoveryTitle: "Dentara <em>жоғалтып жатқан</em> пациенттерді табады.", recoveryIntro: "Dentara қолдағы базаны талдап, қайтару мүмкіндіктерін тауып, пациенттердің емге қайта келуіне көмектеседі.",
+    database: "Пациенттер базасы", patients: "пациент", opportunities: "Қайтару мүмкіндіктері", toRecover: "қайтарылатын пациент", visualFlow: [["Пациенттер базасы", "2 450 жазба"], ["Қайтарылатын пациент", "387 анықталды"], ["Жеке диалог", "312 байланыс"], ["Қабылдау расталды", "64 жазылу"]],
+    outcomes: "Бизнес нәтижесі", outcomesTitle: "Қай түсімді <em>қайтарып жатқаныңызды</em> көріңіз.", outcomesIntro: "Әр пациенттің алғашқы байланыстан визитке дейінгі жолын бақылаңыз.",
+    funnel: ["Пациенттер табылды", "Байланысты", "Жауап берді", "Жазылды", "Келді", "Қайтарылған түсім"], illustrative: "Бұл өнімнің демонстрациялық деректері — нақты клиент нәтижесі емес.",
+    bookingEyebrow: "Жазылу интеграциясы", bookingTitle: "Жауаптан <em>расталған уақытқа дейін.</em>", bookingIntro: "Dentara бос уақытты табуға көмектесіп, жазылуды клиниканың күнтізбесіне немесе брондау жүйесіне жібереді.", conversationLabel: "ПАЦИЕНТПЕН ДИАЛОГ", calendarLabel: "GOOGLE CALENDAR / ЖАЗЫЛУ ЖҮЙЕСІ", calendarNote: "Интеграция мысалы", confirmed: "Айгеріммен тексеру", confirmedTime: "Бейсенбі · 18:30 · Расталды"
+  }
+};
+
 function applyLanguage(lang) {
   const t = translations[lang] || translations.en;
+  const x = extraCopy[lang] || extraCopy.en;
   const set = (selector, value) => { const element = document.querySelector(selector); if (element) element.innerHTML = value; };
   set(".nav-links a:nth-child(1)", t.navProduct); set(".nav-links a:nth-child(2)", t.navHow); set(".nav-links a:nth-child(3)", t.navFeatures); set(".nav-links a:nth-child(4)", t.navClinics);
   document.querySelectorAll(".button-dark, .button-primary, .button-light").forEach((element) => { element.innerHTML = `${t.start} <span>↗</span>`; });
@@ -97,22 +125,26 @@ function applyLanguage(lang) {
   set(".feature-layout .eyebrow", t.built); set(".feature-layout h2", t.featureTitle); set(".feature-layout .section-heading p", t.featureIntro); set(".feature-layout .text-link", `${t.explore} <span>↗</span>`);
   document.querySelectorAll(".feature-card h3").forEach((element, index) => { if (t.features[index]) element.textContent = t.features[index]; }); document.querySelectorAll(".feature-card p").forEach((element, index) => { if (t.featureText[index]) element.textContent = t.featureText[index]; });
   const r = t.recovery;
-  set("#recovery .eyebrow", r.eyebrow); set("#recovery h2", r.title); set("#recovery .section-heading p", r.intro); set("#recovery .text-link", `${r.link} <span>↗</span>`);
+  set(".value-band p", x.valueFirst); set(".value-band strong", x.valueSecond);
+  set("#recovery .eyebrow", r.eyebrow); set("#recovery h2", x.recoveryTitle); set("#recovery .section-heading p", x.recoveryIntro); set("#recovery .text-link", `${r.link} <span>↗</span>`);
+  set(".opportunity-panel>div:first-child small", x.database); set(".opportunity-panel>div:first-child span", x.patients); set(".opportunity-highlight small", x.opportunities); set(".opportunity-highlight span", x.toRecover);
   document.querySelectorAll("#recovery .flow-node").forEach((element, index) => { element.querySelector("strong").textContent = r.flow[index][0]; element.querySelector("small").textContent = r.flow[index][1]; });
   set(".visual-header span", r.dashboardEyebrow); set(".visual-header strong", r.dashboardRange); set(".visual-metric small", r.dashboardLabel); set(".visual-metric span", r.metrics[5][1]);
-  document.querySelectorAll(".visual-flow>div").forEach((element, index) => { element.querySelector("strong").textContent = r.flow[index][0]; element.querySelector("small").textContent = r.flow[index][1]; });
+  document.querySelectorAll(".visual-flow>div").forEach((element, index) => { element.querySelector("strong").textContent = x.visualFlow[index][0]; element.querySelector("small").textContent = x.visualFlow[index][1]; });
   set(".segments-section .eyebrow", r.segmentsEyebrow); set(".segments-section h2", r.segmentsTitle); set(".segments-section .section-heading p", r.segmentsIntro);
   document.querySelectorAll(".segment-card").forEach((element, index) => { element.querySelector("h3").textContent = r.segments[index][0]; element.querySelector("p").textContent = r.segments[index][1]; element.querySelector(".segment-signal").textContent = r.segments[index][2]; });
   set(".workflow-section .eyebrow", r.workflowEyebrow); set(".workflow-section h2", r.workflowTitle); set(".workflow-section .section-heading p", r.workflowIntro);
   document.querySelectorAll(".workflow-grid article").forEach((element, index) => { element.querySelector("h3").textContent = r.workflow[index][0]; element.querySelector("p").textContent = r.workflow[index][1]; });
   set(".dashboard-copy .eyebrow", r.dashboardEyebrow); set(".dashboard-copy h2", r.dashboardTitle); set(".dashboard-copy p", r.dashboardIntro); set(".dashboard-note", r.dashboardNote); set(".dashboard-top span", `${r.dashboardLabel} <i>${r.dashboardLive}</i>`); set(".dashboard-period", `${r.dashboardPeriod} <b>${r.dashboardRange}</b>`); set(".dashboard-chart>span", r.chart); set(".dashboard-chart>small", r.weeks);
   document.querySelectorAll(".metrics-grid>div").forEach((element, index) => { element.querySelector("small").textContent = r.metrics[index][0]; element.querySelector(".metric-up").textContent = r.metrics[index][1]; });
+  set(".revenue-section .eyebrow", x.outcomes); set(".revenue-section h2", x.outcomesTitle); set(".revenue-section .section-heading p", x.outcomesIntro); document.querySelectorAll(".revenue-funnel>div").forEach((element, index) => element.querySelector("strong").textContent = x.funnel[index]); set(".illustrative-note", x.illustrative);
   set(".demo-section .eyebrow", t.demoEyebrow || t.tryIt); set(".demo-section h2", t.demoTitle); set(".demo-section .section-heading p", t.demoIntro); document.querySelectorAll(".demo-points span").forEach((element, index) => element.textContent = t.demoPoints[index]);
   set(".channels-section .eyebrow", r.whereEyebrow); set(".channels-section h2", r.whereTitle); set(".channels-section .section-heading p", r.whereIntro);
   document.querySelectorAll(".channel-list>div").forEach((element, index) => { element.querySelector("small").textContent = index === 3 ? r.comingSoon : r.patientChannel; });
   document.querySelectorAll(".channel-architecture .architecture-node").forEach((element, index) => { const labels = [[r.patientChannel, "Patient"], [r.familiar, "WhatsApp · Telegram · Instagram"], [r.aiLayer, "Dentara AI"], [r.workspace, r.dashboard]]; element.querySelector("small").textContent = labels[index][0]; element.querySelector("strong").textContent = labels[index][1]; });
   set(".workflows-section .eyebrow", r.builtEyebrow); set(".workflows-section h2", r.builtTitle); set(".workflows-section .section-heading p", r.builtIntro);
   document.querySelectorAll(".workflow-pillars>div").forEach((element, index) => { element.querySelector("h3").textContent = r.pillars[index][0]; element.querySelector("p").textContent = r.pillars[index][1]; });
+  set(".booking-section .eyebrow", x.bookingEyebrow); set(".booking-section h2", x.bookingTitle); set(".booking-section .section-heading p", x.bookingIntro); set(".booking-label", x.conversationLabel); set(".calendar-top span", x.calendarLabel); set(".calendar-top b", x.calendarNote); set(".calendar-event strong", x.confirmed); set(".calendar-event small", x.confirmedTime);
   set(".benefits-section .eyebrow", t.better); set(".benefits-section h2", t.benefitsTitle); document.querySelectorAll(".benefits-grid h3").forEach((element, index) => element.textContent = t.benefits[index]); document.querySelectorAll(".benefits-grid p").forEach((element, index) => element.textContent = t.benefitText[index]);
   set(".cta-inner .eyebrow", t.ctaEyebrow || t.ready); set(".cta-inner h2", t.ctaTitle); set(".cta-inner p", t.ctaText); document.querySelector(".footer-inner>span:nth-of-type(1)").textContent = t.footer;
   const inputElement = document.querySelector("#message-input"); if (inputElement) inputElement.placeholder = t.placeholder;
