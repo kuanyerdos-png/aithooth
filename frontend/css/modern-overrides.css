@@ -57,10 +57,17 @@ body { background: #fff; color: var(--ink); }
 .channel-list>div { border-color: var(--line); }
 .benefits-grid>div { border-color: #d8d9dd; }
 .benefits-grid strong { color: var(--purple); }
-.cta-inner { background: var(--ink); border-radius: 12px; }
-.cta-inner .eyebrow { color: #aaa4ff; }
-.cta-inner em { color: #fff; }
-.button-light { color: var(--ink); }
+.cta-inner {
+  background: #f1efff;
+  border: 1px solid #e5e1ff;
+  border-radius: 12px;
+  color: var(--ink);
+}
+.cta-inner .eyebrow { color: var(--purple); }
+.cta-inner em { color: var(--purple); }
+.cta-inner p { color: #646273; }
+.button-light { color: var(--ink); background: #fff; border: 1px solid #e1dffc; }
+.button-light:hover { background: var(--ink); color: #fff; }
 .cta-sparkle { color: var(--purple); }
 .footer { border-color: var(--line); }
 
