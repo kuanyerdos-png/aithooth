@@ -28,3 +28,6 @@ The landing page supports English, Russian, and Kazakh via the language switcher
 
 Copy `.env.example` to `.env` to customize the app name or CORS origins. SQLite/PostgreSQL persistence is intentionally not required for this initial MVP; a repository layer can be introduced when clinic data is added.
 
+## Deploy to Vercel
+
+The repository includes `vercel.json` and `api/index.py` for a Vercel deployment. Import `kuanyerdos-png/aithooth` into Vercel, keep the project root at the repository root, and deploy with no build command. The FastAPI routes remain available under `/api/health` and `/api/chat`.
