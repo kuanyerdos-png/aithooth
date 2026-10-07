@@ -1,6 +1,6 @@
-﻿# Aitooth
+﻿# Dentara
 
-Aitooth is an MVP landing page and FastAPI starter for an AI assistant built for dental clinics. The included chat is a deterministic mock service, so it is safe to run locally without a paid AI provider.
+Dentara is an MVP landing page and FastAPI starter for an AI assistant built for dental clinics. The included chat is a deterministic mock service, so it is safe to run locally without a paid AI provider.
 
 ## Run locally
 
@@ -31,3 +31,4 @@ Copy `.env.example` to `.env` to customize the app name or CORS origins. SQLite/
 ## Deploy to Vercel
 
 The repository includes `vercel.json` and `api/index.py` for a Vercel deployment. Import `kuanyerdos-png/aithooth` into Vercel, keep the project root at the repository root, and deploy with no build command. The FastAPI routes remain available under `/api/health` and `/api/chat`.
+

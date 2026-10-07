@@ -8,7 +8,7 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class Settings:
-    app_name: str = os.getenv("APP_NAME", "Aitooth")
+    app_name: str = os.getenv("APP_NAME", "Dentara")
     cors_origins: list[str] = None
 
     def __post_init__(self) -> None:
@@ -21,4 +21,5 @@ class Settings:
 
 
 settings = Settings()
+
 
