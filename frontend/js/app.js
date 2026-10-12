@@ -1,208 +1,198 @@
-const form = document.querySelector("#chat-form");
-const input = document.querySelector("#message-input");
-const messages = document.querySelector("#messages");
-const status = document.querySelector("#demo-status");
-const nav = document.querySelector(".nav");
-const menuToggle = document.querySelector(".menu-toggle");
-const languageButtons = document.querySelectorAll(".language-button");
+(function () {
+  "use strict";
+  var LANGS = ["en", "ru", "kk"];
+  var LABEL = { en: "EN", ru: "RU", kk: "ҚАЗ" };
+  var PAGES = [
+    ["product", "nav.product"],
+    ["reactivation", "nav.reactivation"],
+    ["how-it-works", "nav.how"],
+    ["integrations", "nav.integrations"],
+    ["pricing", "nav.pricing"],
+    ["demo", "nav.demo"]
+  ];
+  var EMAIL = "hello@qerivo.ai";
+  var page = document.body.getAttribute("data-page") || "home";
 
-const translations = {
-  en: {
-    title: "Qerivo — AI Patient Reactivation for Dental Clinics",
-    navProduct: "Product", navHow: "How it works", navFeatures: "Features",
-    start: "Book a Demo", heroEyebrow: "AI patient reactivation for dental clinics",
-    heroTitle: "Turn inactive patients into <em>appointments and revenue.</em>",
-    heroSubtitle: "Qerivo finds patients your clinic is losing, re-engages them through AI-powered conversations, and turns them into booked appointments.",
-    seeHow: "See how it works", trust: "Built for busy dental teams", inbox: "One intelligent inbox for",
-    how: "How it works", processTitle: "From first message to <em>booked.</em>",
-    processIntro: "A smoother experience for your patients, and more time back for your team.",
-    steps: ["Patient sends a message", "Qerivo understands & responds", "Appointment or handoff"],
-    stepText: ["From the channel they already use, day or night.", "Helpful, on-brand answers that move the conversation forward.", "Convert interest into action, or bring your staff in when it matters."],
-    built: "Built for your practice", featureTitle: "Less repetition.<br /><em>More connection.</em>",
-    featureIntro: "Qerivo handles the everyday conversations so your team can focus on the moments that need a human touch.",
-    explore: "Explore the platform", features: ["Patient Reactivation", "Treatment Recovery", "Revenue Attribution", "No-show Recovery", "Overdue Recall", "Consultation Recovery", "AI Conversations", "Automated Follow-ups", "Appointment Booking", "Human Handoff"],
-    featureText: ["Find inactive patients and bring them back into a conversation.", "Reconnect patients who started care but never finished.", "See which conversations became appointments, visits, and value.", "Follow up with missed appointments and make returning easy.", "Surface patients who are due for their next check-up.", "Re-engage patients who asked questions but never booked.", "Start helpful, personalized conversations at the right time.", "Keep every recovery sequence moving without manual chasing.", "Turn patient intent into a clear appointment request.", "Bring your team in when a conversation needs a human touch."],
-    tryIt: "Try the experience", demoTitle: "See how Qerivo <em>talks.</em>", demoIntro: "Send a test message and see a sample response. This demo uses a simple mock service — ready for your clinic's knowledge base.",
-    demoPoints: ["✓ Patient-friendly responses", "✓ Always ready to hand off"], channelsEyebrow: "Meet patients where they are",
-    channelsTitle: "One assistant.<br /><em>Every channel.</em>", channelsIntro: "Qerivo is designed to bring your patient conversations together across the channels they already love.",
-    planned: "Planned channel", better: "Built around recovered revenue", benefitsTitle: "Recover more patients.<br /><em>Recover more revenue.</em>",
-    benefits: ["Find lost patients", "Reactivate them", "Measure recovered revenue"],
-    benefitText: ["Identify recovery opportunities inside your existing database.", "Start personalized conversations that lead to a next step.", "Connect appointments and visits to measurable value."],
-    ready: "Ready when you are", ctaTitle: "Turn more conversations<br />into <em>appointments.</em>", ctaText: "Start building a better patient experience today.",
-    footer: "AI patient reactivation and revenue recovery for dental clinics.", placeholder: "Try “Can I book an appointment?”", greeting: "Hi! What can I help you with today?", status: "Mock response from Qerivo", valueStatement: "Your clinic already has the patients. <strong>We bring them back.</strong>", demoEyebrow: "Patient recovery conversation", demoTitle: "From conversation to <em>revenue.</em>", demoIntro: "See how Qerivo turns a quiet patient into a confirmed appointment. Send a test message below to try the mock service.", demoPoints: ["✓ Personalized outreach", "✓ Appointment-ready handoff"], ctaEyebrow: "Pay for results", ctaTitle: "Recover the patients<br />you're <em>losing.</em>", ctaText: "Turn your existing patient database into booked appointments and measurable revenue.",
-    recovery: {
-      eyebrow: "Patient reactivation", title: "Turn inactive patients into <em>appointments and revenue.</em>", intro: "Qerivo finds patients your clinic is losing, re-engages them through WhatsApp and other channels, and turns them into booked appointments.", link: "See revenue recovery",
-      flow: [["Patient Database", "Existing history"], ["AI Analysis", "Find signals"], ["Lost Patients Found", "Ready to recover"], ["WhatsApp / AI Conversation", "Personalized outreach"], ["Appointment", "Patient returns"], ["Recovered Revenue", "Tracked in Qerivo"]],
-      segmentsEyebrow: "What Qerivo sees", segmentsTitle: "Qerivo finds the patients <em>you're losing.</em>", segmentsIntro: "Your database already contains demand. Qerivo helps your team act on it.",
-      segments: [["Unfinished Treatment", "Patients who started care but never completed the next step.", "High intent"], ["Missed Appointments", "Patients who missed a visit and never found their way back.", "Ready to return"], ["Overdue Check-ups", "Patients whose recall window has passed without a new booking.", "Timing signal"], ["Consultation Without Booking", "Patients who asked questions or consulted but did not convert.", "Unconverted"], ["Inactive Patients", "Patients who have gone quiet and may still need your care.", "Re-engage"]],
-      workflowEyebrow: "The Qerivo workflow", workflowTitle: "From patient database to <em>recovered revenue.</em>", workflowIntro: "A clear path from existing records to measurable clinic growth.",
-      workflow: [["Connect your patient database", "Bring the patient history your clinic already has."], ["Qerivo analyzes patient history", "Understand visits, treatments, recalls, and gaps."], ["AI identifies patients to recover", "Prioritize the conversations most likely to matter."], ["Qerivo starts personalized conversations", "Reach patients through the channels they already use."], ["Patient books an appointment", "Make the next step simple and natural."], ["Clinic sees recovered revenue", "Track appointments, visits, and attributed value."]],
-      dashboardEyebrow: "Revenue recovery dashboard", dashboardTitle: "Know what came back <em>because of Qerivo.</em>", dashboardIntro: "This is a product visualization with demonstration data, not a customer result.", dashboardNote: "See exactly how many patients you recovered and how much revenue they generated.", dashboardLabel: "Revenue Recovery", dashboardLive: "● Live view", dashboardPeriod: "Recovery overview", dashboardRange: "Last 30 days⌄", metrics: [["Patients analyzed", "Database scan"], ["Patients to recover", "AI identified"], ["Conversations", "Started by Qerivo"], ["Appointments", "Booked"], ["Visits", "Completed"], ["Recovered revenue", "Demonstration data"]], chart: "Recovered appointments", weeks: "Week 1     Week 2     Week 3     Week 4",
-      whereEyebrow: "Where Qerivo works", whereTitle: "Patients use their channels.<br /><em>Clinics use Qerivo.</em>", whereIntro: "Qerivo does not ask patients to visit a Qerivo website. Patients keep chatting in the channels they already use, while your clinic works from one dashboard.", patientChannel: "Patient channel", comingSoon: "Coming soon", familiar: "Familiar channels", aiLayer: "AI layer", workspace: "Clinic workspace", dashboard: "Dashboard · CRM · MIS",
-      builtEyebrow: "Built for dental workflows", builtTitle: "Not a generic chatbot.<br /><em>A system for the way clinics work.</em>", builtIntro: "Qerivo is designed around real dental workflows, from treatment plans and recalls to no-shows and handoffs.", pillars: [["Patient history", "Work from the context already inside your patient database."], ["Treatment journeys", "Follow up on unfinished care and the next clinically relevant step."], ["Recall cycles", "Keep overdue check-ups visible without spreadsheet chasing."], ["Team handoffs", "Escalate complex conversations to the right clinic staff member."]]
-    }
-  },
-  ru: {
-    title: "Qerivo — AI-реактивация пациентов для стоматологических клиник", navProduct: "Продукт", navHow: "Как это работает", navFeatures: "Возможности", start: "Забронировать демо",
-    heroEyebrow: "Возврат пациентов с помощью AI", heroTitle: "Превращайте неактивных пациентов в <em>записи и выручку.</em>", heroSubtitle: "Qerivo находит пациентов, которых теряет клиника, возвращает их в персональный AI-диалог и помогает записаться на приём.",
-    seeHow: "Как это работает", trust: "Для загруженных стоматологических команд", inbox: "Единый умный inbox для", how: "Как это работает", processTitle: "От первого сообщения до <em>записи.</em>", processIntro: "Комфортнее для пациентов и больше времени для вашей команды.",
-    steps: ["Пациент отправляет сообщение", "Qerivo понимает и отвечает", "Запись или передача сотруднику"], stepText: ["Из привычного канала — днём и ночью.", "Полезные ответы в стиле вашей клиники, которые двигают диалог вперёд.", "Превращайте интерес в действие или подключайте сотрудника, когда это важно."],
-    built: "Для вашей практики", featureTitle: "Меньше рутины.<br /><em>Больше заботы.</em>", featureIntro: "Qerivo берёт на себя повседневные диалоги, чтобы команда уделяла внимание действительно важным моментам.", explore: "Изучить платформу",
-    features: ["Возврат пациентов", "Восстановление лечения", "Атрибуция выручки", "Возврат после неявки", "Просроченный recall", "Возврат после консультации", "AI-диалоги", "Автоматические follow-up", "Запись на приём", "Передача сотруднику"], featureText: ["Находите неактивных пациентов и возвращайте их в диалог.", "Возвращайте пациентов, которые начали лечение, но не завершили его.", "Видите, какие диалоги стали записями, визитами и выручкой.", "Напоминайте о пропущенных визитах и помогайте вернуться.", "Находите пациентов, которым пора на check-up.", "Возвращайте пациентов, которые интересовались, но не записались.", "Начинайте полезные персональные диалоги в нужный момент.", "Автоматически продолжайте цепочки возврата.", "Превращайте интерес пациента в запись.", "Подключайте сотрудника, когда нужен человек."],
-    tryIt: "Попробуйте", demoTitle: "Посмотрите, как Qerivo <em>общается.</em>", demoIntro: "Отправьте тестовое сообщение и получите пример ответа. Сейчас используется простой mock-сервис — его легко подключить к базе знаний клиники.", demoPoints: ["✓ Дружелюбные ответы", "✓ Простая передача сотруднику"],
-    recovery: {
-      eyebrow: "Возврат пациентов", title: "Превращайте неактивных пациентов в <em>записи и выручку.</em>", intro: "Qerivo находит пациентов, которых теряет клиника, возвращает их в диалог через WhatsApp и другие каналы и помогает записаться.", link: "Посмотреть возврат выручки",
-      flow: [["База пациентов", "История лечения"], ["AI-анализ", "Поиск сигналов"], ["Потерянные пациенты найдены", "Готовы вернуться"], ["WhatsApp / AI-диалог", "Персональное сообщение"], ["Запись", "Пациент возвращается"], ["Возвращённая выручка", "Отслеживается в Qerivo"]],
-      segmentsEyebrow: "Что видит Qerivo", segmentsTitle: "Qerivo находит пациентов, <em>которых вы теряете.</em>", segmentsIntro: "В вашей базе уже есть спрос. Qerivo помогает команде действовать вовремя.",
-      segments: [["Незавершённое лечение", "Пациенты начали лечение, но не сделали следующий шаг.", "Высокий интерес"], ["Пропущенные записи", "Пациенты пропустили визит и не вернулись.", "Готовы вернуться"], ["Просроченные осмотры", "Срок планового повторного визита уже прошёл.", "Важный момент"], ["Консультация без записи", "Пациенты задавали вопросы, но не записались.", "Не конвертированы"], ["Неактивные пациенты", "Пациенты давно не выходили на связь, но им может требоваться лечение.", "Вернуть в диалог"]],
-      workflowEyebrow: "Рабочий процесс Qerivo", workflowTitle: "От базы пациентов до <em>возвращённой выручки.</em>", workflowIntro: "Понятный путь от существующих записей до роста клиники.",
-      workflow: [["Подключите базу пациентов", "Используйте историю пациентов, которая уже есть у клиники."], ["Qerivo анализирует историю", "Учитывайте визиты, лечение, recall и пробелы."], ["AI находит пациентов для возврата", "Выделяйте диалоги с наибольшим потенциалом."], ["Qerivo начинает персональные диалоги", "Общайтесь с пациентами в привычных каналах."], ["Пациент записывается", "Сделайте следующий шаг простым и естественным."], ["Клиника видит возвращённую выручку", "Отслеживайте записи, визиты и ценность обращений."]],
-      dashboardEyebrow: "Панель возврата выручки", dashboardTitle: "Знайте, что вернулось <em>благодаря Qerivo.</em>", dashboardIntro: "Это демонстрация интерфейса продукта, а не реальный результат клиента.", dashboardNote: "Смотрите, сколько пациентов вернулось и какую выручку они принесли.", dashboardLabel: "Возврат выручки", dashboardLive: "● Онлайн", dashboardPeriod: "Обзор возврата", dashboardRange: "Последние 30 дней⌄", metrics: [["Пациентов проанализировано", "Сканирование базы"], ["Пациентов для возврата", "Найдено AI"], ["Диалогов", "Начато Qerivo"], ["Записей", "Создано"], ["Визитов", "Завершено"], ["Возвращённая выручка", "Демонстрационные данные"]], chart: "Возвращённые записи", weeks: "Неделя 1     Неделя 2     Неделя 3     Неделя 4",
-      whereEyebrow: "Где работает Qerivo", whereTitle: "Пациенты используют привычные каналы.<br /><em>Клиника использует Qerivo.</em>", whereIntro: "Пациентам не нужно заходить на сайт Qerivo. Они общаются в привычных каналах, а клиника работает из одной панели.", patientChannel: "Канал пациента", comingSoon: "Скоро", familiar: "Привычные каналы", aiLayer: "AI-слой", workspace: "Рабочее пространство клиники", dashboard: "Панель · CRM · МИС",
-      builtEyebrow: "Создано для стоматологии", builtTitle: "Не обычный чат-бот.<br /><em>Система для работы клиники.</em>", builtIntro: "Qerivo учитывает реальные процессы: планы лечения, recall, пропущенные визиты и передачу сотрудникам.", pillars: [["История пациента", "Работайте с контекстом, который уже есть в базе пациентов."], ["Путь лечения", "Возвращайте пациентов к незавершённому лечению и следующему шагу."], ["Recall-циклы", "Контролируйте просроченные осмотры без таблиц и ручной проверки."], ["Передача команде", "Передавайте сложные диалоги нужному сотруднику клиники."]]
-    },
-    channelsEyebrow: "Будьте там, где пациенты", channelsTitle: "Один ассистент.<br /><em>Каждый канал.</em>", channelsIntro: "Qerivo объединяет общение с пациентами в привычных для них каналах.", planned: "Канал запланирован", better: "Лучшая регистратура", benefitsTitle: "Освободите время для <em>главного.</em>",
-    better: "Создано вокруг возвращённой выручки", benefitsTitle: "Возвращайте больше пациентов.<br /><em>Возвращайте больше выручки.</em>", benefits: ["Находите потерянных пациентов", "Возвращайте их", "Измеряйте возвращённую выручку"], benefitText: ["Находите возможности возврата в существующей базе.", "Начинайте персональные диалоги, ведущие к следующему шагу.", "Связывайте записи и визиты с измеримой ценностью."], ready: "Готовы начать?", ctaTitle: "Превращайте диалоги<br />в <em>записи.</em>", ctaText: "Создайте лучший опыт для пациентов уже сегодня.", footer: "AI-возврат пациентов и выручки для стоматологических клиник.", placeholder: "Например: «Можно записаться на приём?»", greeting: "Здравствуйте! Чем я могу помочь?", status: "Тестовый ответ Qerivo", valueStatement: "У вашей клиники уже есть пациенты. <strong>Мы возвращаем их.</strong>", demoEyebrow: "Диалог по возврату пациента", demoTitle: "От диалога к <em>выручке.</em>", demoIntro: "Посмотрите, как Qerivo возвращает неактивного пациента к подтверждённой записи. Отправьте тестовое сообщение и попробуйте mock-сервис.", demoPoints: ["✓ Персональное обращение", "✓ Готовая запись для команды"], ctaEyebrow: "Оплата за результат", ctaTitle: "Возвращайте пациентов,<br />которых вы <em>теряете.</em>", ctaText: "Превратите существующую базу пациентов в записи и измеримую выручку."
-  },
-  kk: {
-    title: "Qerivo — стоматологиялық клиникаларға арналған AI-пациент реактивациясы", navProduct: "Өнім", navHow: "Қалай жұмыс істейді", navFeatures: "Мүмкіндіктер", start: "Демоға жазылу",
-    heroEyebrow: "Стоматологияға арналған AI-пациент қайтару жүйесі", heroTitle: "Белсенді емес пациенттерді <em>жазылу мен түсімге айналдырыңыз.</em>", heroSubtitle: "Qerivo клиника жоғалтып жатқан пациенттерді тауып, AI-диалог арқылы қайта сөйлесіп, қабылдауға жазылуына көмектеседі.",
-    seeHow: "Қалай жұмыс істейді", trust: "Стоматологиялық командалар үшін", inbox: "Бір ақылды inbox —", how: "Қалай жұмыс істейді", processTitle: "Алғашқы хабарламадан <em>жазылуға дейін.</em>", processIntro: "Пациенттерге ыңғайлы, командаңызға көбірек уақыт.", steps: ["Пациент хабарлама жібереді", "Qerivo түсініп, жауап береді", "Қабылдауға жазылу немесе қызметкерге беру"], stepText: ["Пациент қолданатын арнадан, кез келген уақытта.", "Диалогты алға жылжытатын пайдалы әрі нақты жауаптар.", "Қызығушылықты әрекетке айналдырыңыз немесе қажет кезде маманды қосыңыз."],
-    built: "Клиникаңыз үшін", featureTitle: "Қайталанатын жұмыс аз.<br /><em>Қамқорлық көп.</em>", featureIntro: "Qerivo күнделікті диалогтарды жүргізеді, ал командаңыз маңызды сәттерге назар аударады.", explore: "Платформаны зерттеу", features: ["Пациенттерді қайтару", "Емді қалпына келтіру", "Түсімді атрибуциялау", "Келмегендерді қайтару", "Мерзімі өткен recall", "Кеңестен кейін қайтару", "AI-диалогтар", "Автоматты follow-up", "Қабылдауға жазу", "Қызметкерге беру"], featureText: ["Белсенді емес пациенттерді тауып, диалогқа қайтарыңыз.", "Емді бастап, аяқтамаған пациенттермен қайта байланысыңыз.", "Қай диалог жазылуға, визитке және түсімге айналғанын көріңіз.", "Келмеген пациенттерге қайта жазып, оралуын жеңілдетіңіз.", "Тексерілу уақыты өткен пациенттерді көрсетіңіз.", "Сұрақ қойып, бірақ жазылмаған пациенттерді қайтарыңыз.", "Дер кезінде пайдалы, жеке диалог бастаңыз.", "Қайтару тізбегін автоматты жалғастырыңыз.", "Пациент қызығушылығын нақты жазылуға айналдырыңыз.", "Адам көмегі керек кезде қызметкерді қосыңыз."],
-    tryIt: "Қазір көріңіз", demoTitle: "Qerivo қалай <em>сөйлесетінін</em> көріңіз.", demoIntro: "Тест хабарламасын жіберіп, жауап үлгісін көріңіз. Бұл демо қарапайым mock-сервисті қолданады — кейін клиника білім базасына дайын.", demoPoints: ["✓ Пациентке ыңғайлы жауаптар", "✓ Қызметкерге беруге дайын"],
-    channelsEyebrow: "Пациенттер бар жерде болыңыз", channelsTitle: "Бір ассистент.<br /><em>Барлық арнада.</em>", channelsIntro: "Qerivo пациенттер қолданатын арналардағы диалогтарды бір жерге жинауға арналған.", planned: "Жоспарланған арна", better: "Жақсырақ регистратура", benefitsTitle: "Маңызды нәрсеге <em>уақыт бөліңіз.</em>",
-    better: "Қайтарылған түсімге негізделген", benefitsTitle: "Көбірек пациентті қайтарыңыз.<br /><em>Көбірек түсім қайтарыңыз.</em>", benefits: ["Жоғалған пациенттерді табыңыз", "Оларды қайтарыңыз", "Қайтарылған түсімді өлшеңіз"], benefitText: ["Қолдағы базадан қайтару мүмкіндіктерін табыңыз.", "Келесі қадамға әкелетін жеке диалог бастаңыз.", "Жазылулар мен визиттерді нақты нәтижемен байланыстырыңыз."], ready: "Бастауға дайынсыз ба?", ctaTitle: "Көбірек диалогты<br /><em>қабылдауға айналдырыңыз.</em>", ctaText: "Пациенттерге жақсы тәжірибені бүгін бастаңыз.", footer: "Стоматологиялық клиникаларға арналған AI-пациент қайтару және түсім жүйесі.", placeholder: "Мысалы: «Қабылдауға жазылуға бола ма?»", greeting: "Сәлеметсіз бе! Сізге қалай көмектесе аламын?", status: "Qerivo тест жауабы", valueStatement: "Клиникаңызда пациенттер қазірдің өзінде бар. <strong>Біз оларды қайтарамыз.</strong>", demoEyebrow: "Пациентті қайтару диалогы", demoTitle: "Диалогтан <em>түсімге дейін.</em>", demoIntro: "Qerivo белсенді емес пациентті расталған қабылдауға қалай қайтаратынын көріңіз. Тест хабарламасын жіберіп, mock-сервисті қолданып көріңіз.", demoPoints: ["✓ Жеке хабарлама", "✓ Командаға дайын жазылу"], ctaEyebrow: "Нәтиже үшін төлеңіз", ctaTitle: "Жоғалтып жатқан<br /><em>пациенттерді қайтарыңыз.</em>", ctaText: "Қолдағы пациенттер базасын жазылулар мен өлшенетін түсімге айналдырыңыз.",
-    recovery: {
-      eyebrow: "Пациенттерді қайтару", title: "Белсенді емес пациенттерді <em>жазылу мен түсімге айналдырыңыз.</em>", intro: "Qerivo клиника жоғалтып жатқан пациенттерді тауып, WhatsApp және басқа арналар арқылы қайта сөйлесуге шақырып, қабылдауға жазылуына көмектеседі.", link: "Түсімді қайтаруды көру",
-      flow: [["Пациенттер базасы", "Қолдағы тарих"], ["AI талдауы", "Белгілерді табу"], ["Жоғалған пациенттер табылды", "Қайтуға дайын"], ["WhatsApp / AI диалогы", "Жеке хабарлама"], ["Қабылдауға жазылу", "Пациент қайтады"], ["Қайтарылған түсім", "Qerivo-да бақыланады"]],
-      segmentsEyebrow: "Qerivo нені көреді", segmentsTitle: "Qerivo <em>жоғалтып жатқан</em> пациенттерді табады.", segmentsIntro: "Базаңызда сұраныс қазірдің өзінде бар. Qerivo командаңызға дер кезінде әрекет етуге көмектеседі.",
-      segments: [["Аяқталмаған ем", "Емді бастап, келесі қадамға өтпеген пациенттер.", "Қызығушылығы жоғары"], ["Келмей қалғандар", "Қабылдауға келмей, қайта оралмаған пациенттер.", "Қайтуға дайын"], ["Мерзімі өткен тексеру", "Жоспарлы тексеру уақыты өтіп кеткен пациенттер.", "Уақыт сигналы"], ["Кеңес алып, жазылмағандар", "Сұрақ қойып, бірақ қабылдауға жазылмаған пациенттер.", "Айналым болмады"], ["Белсенді емес пациенттер", "Ұзақ уақыт хабарласпаған, бірақ ем қажет болуы мүмкін пациенттер.", "Диалогқа қайтару"]],
-      workflowEyebrow: "Qerivo жұмыс процесі", workflowTitle: "Пациенттер базасынан <em>қайтарылған түсімге дейін.</em>", workflowIntro: "Қолдағы жазбалардан клиника өсіміне дейінгі түсінікті жол.",
-      workflow: [["Пациенттер базасын қосыңыз", "Клиникаңызда бар пациент тарихын пайдаланыңыз."], ["Qerivo тарихты талдайды", "Визиттерді, емді, recall және үзілістерді түсініңіз."], ["AI қайтарылатын пациенттерді табады", "Ең маңызды диалогтарды бірінші орынға қойыңыз."], ["Qerivo жеке диалог бастайды", "Пациенттер қолданатын арналар арқылы байланысыңыз."], ["Пациент қабылдауға жазылады", "Келесі қадамды жеңіл әрі табиғи етіңіз."], ["Клиника қайтарылған түсімді көреді", "Жазылуларды, визиттерді және нәтижені бақылаңыз."]],
-      dashboardEyebrow: "Түсімді қайтару панелі", dashboardTitle: "Qerivo арқасында <em>не қайтқанын біліңіз.</em>", dashboardIntro: "Бұл — өнім интерфейсінің демонстрациясы, нақты клиент нәтижесі емес.", dashboardNote: "Қанша пациент қайтқанын және қанша түсім әкелгенін нақты көріңіз.", dashboardLabel: "Түсімді қайтару", dashboardLive: "● Онлайн", dashboardPeriod: "Қайтару шолуы", dashboardRange: "Соңғы 30 күн⌄", metrics: [["Талданған пациенттер", "База сканы"], ["Қайтарылатын пациенттер", "AI анықтады"], ["Диалогтар", "Qerivo бастады"], ["Жазылулар", "Рәсімделді"], ["Визиттер", "Аяқталды"], ["Қайтарылған түсім", "Демонстрациялық дерек"]], chart: "Қайтарылған жазылулар", weeks: "1-апта     2-апта     3-апта     4-апта",
-      whereEyebrow: "Qerivo қайда жұмыс істейді", whereTitle: "Пациенттер өз арналарын қолданады.<br /><em>Клиника Qerivo-ны қолданады.</em>", whereIntro: "Пациентке Qerivo сайтына кірудің қажеті жоқ. Ол үйреншікті арнасында сөйлеседі, ал клиника бір панельден жұмыс істейді.", patientChannel: "Пациент арнасы", comingSoon: "Жақында", familiar: "Үйреншікті арналар", aiLayer: "AI қабаты", workspace: "Клиника жұмыс кеңістігі", dashboard: "Панель · CRM · МИС",
-      builtEyebrow: "Стоматологияға арналған", builtTitle: "Бұл жай чат-бот емес.<br /><em>Клиника жұмысына арналған жүйе.</em>", builtIntro: "Qerivo ем жоспары, recall, келмей қалғандар және қызметкерге беру сияқты нақты процестерге бейімделген.", pillars: [["Пациент тарихы", "Пациенттер базасында бар контекстпен жұмыс істеңіз."], ["Емдеу жолы", "Аяқталмаған ем мен келесі маңызды қадамды бақылаңыз."], ["Recall циклдері", "Мерзімі өткен тексерулерді кестесіз бақылаңыз."], ["Командаға беру", "Күрделі диалогты тиісті клиника қызметкеріне жіберіңіз."]]
-    }
+  /* ---------- language ---------- */
+  function detect() {
+    var saved = null;
+    try { saved = localStorage.getItem("qerivo-lang"); } catch (e) {}
+    if (LANGS.indexOf(saved) > -1) return saved;
+    var nav = (navigator.language || "en").toLowerCase();
+    if (nav.indexOf("kk") === 0) return "kk";
+    if (nav.indexOf("ru") === 0) return "ru";
+    return "en";
   }
-};
-
-const extraCopy = {
-  en: {
-    valueFirst: "Your clinic already has the patients.", valueSecond: "We bring them back.",
-    recoveryTitle: "Qerivo finds the patients <em>you're losing.</em>", recoveryIntro: "Qerivo analyzes your existing database, finds recovery opportunities, and helps bring patients back into care.",
-    database: "Patient database", patients: "patients", opportunities: "Recovery opportunities", toRecover: "patients to recover", visualFlow: [["Patient database", "2,450 records"], ["Patients to recover", "387 identified"], ["Personalized conversation", "312 contacted"], ["Appointment booked", "64 appointments"]],
-    outcomes: "Business outcomes", outcomesTitle: "See the revenue <em>you're recovering.</em>", outcomesIntro: "Follow every recovery opportunity from first contact to completed visit.",
-    funnel: ["Patients identified", "Contacted", "Replied", "Booked", "Visited", "Revenue recovered"], illustrative: "Illustrative product data only — not a customer result.",
-    bookingEyebrow: "Booking integration", bookingTitle: "From a reply to a <em>confirmed time.</em>", bookingIntro: "Qerivo can help patients find an available time, then pass the booking to the clinic's calendar or booking system.", conversationLabel: "PATIENT CONVERSATION", calendarLabel: "GOOGLE CALENDAR / BOOKING SYSTEM", calendarNote: "Integration example", confirmed: "Check-up with Aigerim", confirmedTime: "Thursday · 18:30 · Confirmed"
-  },
-  ru: {
-    valueFirst: "У вашей клиники уже есть пациенты.", valueSecond: "Мы возвращаем их.",
-    recoveryTitle: "Qerivo находит пациентов, <em>которых вы теряете.</em>", recoveryIntro: "Qerivo анализирует существующую базу, находит возможности для возврата и помогает пациентам снова прийти на лечение.",
-    database: "База пациентов", patients: "пациентов", opportunities: "Возможности возврата", toRecover: "пациентов для возврата", visualFlow: [["База пациентов", "2 450 записей"], ["Пациенты для возврата", "387 найдены"], ["Персональный диалог", "312 контактов"], ["Запись подтверждена", "64 записи"]],
-    outcomes: "Бизнес-результат", outcomesTitle: "Смотрите, какую выручку <em>вы возвращаете.</em>", outcomesIntro: "Отслеживайте путь каждого пациента от первого контакта до визита.",
-    funnel: ["Пациенты найдены", "Связались", "Ответили", "Записались", "Пришли", "Возвращённая выручка"], illustrative: "Демонстрационные данные продукта — не результат клиента.",
-    bookingEyebrow: "Интеграция записи", bookingTitle: "От ответа к <em>подтверждённому времени.</em>", bookingIntro: "Qerivo помогает найти свободное время и передаёт запись в календарь или систему бронирования клиники.", conversationLabel: "ДИАЛОГ С ПАЦИЕНТОМ", calendarLabel: "GOOGLE CALENDAR / СИСТЕМА ЗАПИСИ", calendarNote: "Пример интеграции", confirmed: "Осмотр с Айгерим", confirmedTime: "Четверг · 18:30 · Подтверждено"
-  },
-  kk: {
-    valueFirst: "Клиникаңызда пациенттер қазірдің өзінде бар.", valueSecond: "Біз оларды қайтарамыз.",
-    recoveryTitle: "Qerivo <em>жоғалтып жатқан</em> пациенттерді табады.", recoveryIntro: "Qerivo қолдағы базаны талдап, қайтару мүмкіндіктерін тауып, пациенттердің емге қайта келуіне көмектеседі.",
-    database: "Пациенттер базасы", patients: "пациент", opportunities: "Қайтару мүмкіндіктері", toRecover: "қайтарылатын пациент", visualFlow: [["Пациенттер базасы", "2 450 жазба"], ["Қайтарылатын пациент", "387 анықталды"], ["Жеке диалог", "312 байланыс"], ["Қабылдау расталды", "64 жазылу"]],
-    outcomes: "Бизнес нәтижесі", outcomesTitle: "Қай түсімді <em>қайтарып жатқаныңызды</em> көріңіз.", outcomesIntro: "Әр пациенттің алғашқы байланыстан визитке дейінгі жолын бақылаңыз.",
-    funnel: ["Пациенттер табылды", "Байланысты", "Жауап берді", "Жазылды", "Келді", "Қайтарылған түсім"], illustrative: "Бұл өнімнің демонстрациялық деректері — нақты клиент нәтижесі емес.",
-    bookingEyebrow: "Жазылу интеграциясы", bookingTitle: "Жауаптан <em>расталған уақытқа дейін.</em>", bookingIntro: "Qerivo бос уақытты табуға көмектесіп, жазылуды клиниканың күнтізбесіне немесе брондау жүйесіне жібереді.", conversationLabel: "ПАЦИЕНТПЕН ДИАЛОГ", calendarLabel: "GOOGLE CALENDAR / ЖАЗЫЛУ ЖҮЙЕСІ", calendarNote: "Интеграция мысалы", confirmed: "Айгеріммен тексеру", confirmedTime: "Бейсенбі · 18:30 · Расталды"
+  var lang = detect();
+  function t(key) {
+    var v = window.I18N[key];
+    if (!v) return key;
+    return v[LANGS.indexOf(lang)] || v[0];
   }
-};
 
-function applyLanguage(lang) {
-  const t = translations[lang] || translations.en;
-  const x = extraCopy[lang] || extraCopy.en;
-  const set = (selector, value) => { const element = document.querySelector(selector); if (element) element.innerHTML = value; };
-  set(".nav-links a:nth-child(1)", t.navProduct); set(".nav-links a:nth-child(2)", t.navHow); set(".nav-links a:nth-child(3)", t.navFeatures);
-  document.querySelectorAll(".button-dark, .button-primary, .button-light").forEach((element) => { element.innerHTML = `${t.start} <span>↗</span>`; });
-  set(".hero-copy .eyebrow", `<span class="status-dot"></span> ${t.heroEyebrow}`); set(".hero h1", t.heroTitle); set(".hero-subtitle", t.heroSubtitle); set(".hero-actions .text-link", `${t.seeHow} <span class="play-icon">▶</span>`); set(".hero-value", t.valueStatement); set(".logo-strip .container>span", t.inbox);
-  set(".process-section .eyebrow", t.how); set(".process-section h2", t.processTitle); set(".process-section .section-heading p", t.processIntro);
-  document.querySelectorAll(".process-card h3").forEach((element, index) => element.textContent = t.steps[index]); document.querySelectorAll(".process-card p").forEach((element, index) => element.textContent = t.stepText[index]);
-  set(".feature-layout .eyebrow", t.built); set(".feature-layout h2", t.featureTitle); set(".feature-layout .section-heading p", t.featureIntro); set(".feature-layout .text-link", `${t.explore} <span>↗</span>`);
-  document.querySelectorAll(".feature-card h3").forEach((element, index) => { if (t.features[index]) element.textContent = t.features[index]; }); document.querySelectorAll(".feature-card p").forEach((element, index) => { if (t.featureText[index]) element.textContent = t.featureText[index]; });
-  const r = t.recovery;
-  set(".value-band p", x.valueFirst); set(".value-band strong", x.valueSecond);
-  set("#recovery .eyebrow", r.eyebrow); set("#recovery h2", x.recoveryTitle); set("#recovery .section-heading p", x.recoveryIntro); set("#recovery .text-link", `${r.link} <span>↗</span>`);
-  set(".opportunity-panel>div:first-child small", x.database); set(".opportunity-panel>div:first-child span", x.patients); set(".opportunity-highlight small", x.opportunities); set(".opportunity-highlight span", x.toRecover);
-  document.querySelectorAll("#recovery .flow-node").forEach((element, index) => { element.querySelector("strong").textContent = r.flow[index][0]; element.querySelector("small").textContent = r.flow[index][1]; });
-  set(".visual-header span", r.dashboardEyebrow); set(".visual-header strong", r.dashboardRange); set(".visual-metric small", r.dashboardLabel); set(".visual-metric span", r.metrics[5][1]);
-  document.querySelectorAll(".visual-flow>div").forEach((element, index) => { element.querySelector("strong").textContent = x.visualFlow[index][0]; element.querySelector("small").textContent = x.visualFlow[index][1]; });
-  set(".segments-section .eyebrow", r.segmentsEyebrow); set(".segments-section h2", r.segmentsTitle); set(".segments-section .section-heading p", r.segmentsIntro);
-  document.querySelectorAll(".segment-card").forEach((element, index) => { element.querySelector("h3").textContent = r.segments[index][0]; element.querySelector("p").textContent = r.segments[index][1]; element.querySelector(".segment-signal").textContent = r.segments[index][2]; });
-  set(".workflow-section .eyebrow", r.workflowEyebrow); set(".workflow-section h2", r.workflowTitle); set(".workflow-section .section-heading p", r.workflowIntro);
-  document.querySelectorAll(".workflow-grid article").forEach((element, index) => { element.querySelector("h3").textContent = r.workflow[index][0]; element.querySelector("p").textContent = r.workflow[index][1]; });
-  set(".dashboard-copy .eyebrow", r.dashboardEyebrow); set(".dashboard-copy h2", r.dashboardTitle); set(".dashboard-copy p", r.dashboardIntro); set(".dashboard-note", r.dashboardNote); set(".dashboard-top span", `${r.dashboardLabel} <i>${r.dashboardLive}</i>`); set(".dashboard-period", `${r.dashboardPeriod} <b>${r.dashboardRange}</b>`); set(".dashboard-chart>span", r.chart); set(".dashboard-chart>small", r.weeks);
-  document.querySelectorAll(".metrics-grid>div").forEach((element, index) => { element.querySelector("small").textContent = r.metrics[index][0]; element.querySelector(".metric-up").textContent = r.metrics[index][1]; });
-  set(".revenue-section .eyebrow", x.outcomes); set(".revenue-section h2", x.outcomesTitle); set(".revenue-section .section-heading p", x.outcomesIntro); document.querySelectorAll(".revenue-funnel>div").forEach((element, index) => element.querySelector("strong").textContent = x.funnel[index]); set(".illustrative-note", x.illustrative);
-  set(".demo-section .eyebrow", t.demoEyebrow || t.tryIt); set(".demo-section h2", t.demoTitle); set(".demo-section .section-heading p", t.demoIntro); document.querySelectorAll(".demo-points span").forEach((element, index) => element.textContent = t.demoPoints[index]);
-  set(".channels-section .eyebrow", r.whereEyebrow); set(".channels-section h2", r.whereTitle); set(".channels-section .section-heading p", r.whereIntro);
-  document.querySelectorAll(".channel-list>div").forEach((element, index) => { element.querySelector("small").textContent = index === 3 ? r.comingSoon : r.patientChannel; });
-  document.querySelectorAll(".channel-architecture .architecture-node").forEach((element, index) => { const labels = [[r.patientChannel, "Patient"], [r.familiar, "WhatsApp · Telegram · Instagram"], [r.aiLayer, "Qerivo AI"], [r.workspace, r.dashboard]]; element.querySelector("small").textContent = labels[index][0]; element.querySelector("strong").textContent = labels[index][1]; });
-  set(".workflows-section .eyebrow", r.builtEyebrow); set(".workflows-section h2", r.builtTitle); set(".workflows-section .section-heading p", r.builtIntro);
-  document.querySelectorAll(".workflow-pillars>div").forEach((element, index) => { element.querySelector("h3").textContent = r.pillars[index][0]; element.querySelector("p").textContent = r.pillars[index][1]; });
-  set(".booking-section .eyebrow", x.bookingEyebrow); set(".booking-section h2", x.bookingTitle); set(".booking-section .section-heading p", x.bookingIntro); set(".booking-label", x.conversationLabel); set(".calendar-top span", x.calendarLabel); set(".calendar-top b", x.calendarNote); set(".calendar-event strong", x.confirmed); set(".calendar-event small", x.confirmedTime);
-  set(".benefits-section .eyebrow", t.better); set(".benefits-section h2", t.benefitsTitle); document.querySelectorAll(".benefits-grid h3").forEach((element, index) => element.textContent = t.benefits[index]); document.querySelectorAll(".benefits-grid p").forEach((element, index) => element.textContent = t.benefitText[index]);
-  set(".cta-inner .eyebrow", t.ctaEyebrow || t.ready); set(".cta-inner h2", t.ctaTitle); set(".cta-inner p", t.ctaText); document.querySelector(".footer-inner>span:nth-of-type(1)").textContent = t.footer;
-  const inputElement = document.querySelector("#message-input"); if (inputElement) inputElement.placeholder = t.placeholder;
-  const greeting = document.querySelector("#messages .received"); if (greeting && !greeting.dataset.custom) { greeting.firstChild.textContent = t.greeting; }
-  document.documentElement.lang = lang === "kk" ? "kk" : lang; document.title = t.title;
-  languageButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === lang));
-  localStorage.setItem("qerivo-language", lang);
-}
+  /* ---------- shared blocks ---------- */
+  function renderHeader() {
+    var links = PAGES.map(function (p) {
+      return '<a href="' + p[0] + '.html"' + (p[0] === page ? ' class="active"' : "") + ' data-i18n="' + p[1] + '"></a>';
+    }).join("");
+    var langs = LANGS.map(function (l) {
+      return '<button type="button" data-lang="' + l + '">' + LABEL[l] + "</button>";
+    }).join("");
+    return '<header class="site-header"><nav class="nav container" aria-label="Main">' +
+      '<a class="brand" href="index.html"><img src="assets/qerivo-logo.png" alt="" />Qerivo</a>' +
+      '<div class="nav-links">' + links +
+      '<a class="btn btn-primary panel-cta" href="contact.html"><span data-i18n="cta.book"></span> ↗</a></div>' +
+      '<div class="nav-right"><div class="lang" role="group" aria-label="Language">' + langs + "</div>" +
+      '<a class="btn btn-primary btn-sm" href="contact.html"><span data-i18n="cta.book"></span> ↗</a>' +
+      '<button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button></div>' +
+      "</nav></header>";
+  }
+  function renderFooter() {
+    var links = PAGES.map(function (p) {
+      return '<a href="' + p[0] + '.html" data-i18n="' + p[1] + '"></a>';
+    }).join("");
+    return '<footer class="footer"><div class="container"><div class="foot">' +
+      '<div><a class="brand" href="index.html"><img src="assets/qerivo-logo.png" alt="" />Qerivo</a><p data-i18n="foot.about"></p></div>' +
+      '<div><h4 data-i18n="foot.pages"></h4>' + links + "</div>" +
+      '<div><h4 data-i18n="foot.contact"></h4><a href="mailto:' + EMAIL + '">' + EMAIL + '</a><a href="contact.html" data-i18n="cta.book"></a></div>' +
+      '</div><div class="copy"><span data-i18n="foot.rights"></span> · <span data-i18n="foot.demo"></span></div></div></footer>';
+  }
+  function renderCta() {
+    return '<div class="container"><div class="cta-box"><div class="eyebrow" data-i18n="cta.eyebrow"></div>' +
+      '<h2 data-i18n="cta.title"></h2><p data-i18n="cta.text"></p>' +
+      '<a class="btn btn-primary" href="contact.html"><span data-i18n="cta.book"></span> ↗</a></div></div>';
+  }
+  var h = document.getElementById("site-header"); if (h) h.outerHTML = renderHeader();
+  var f = document.getElementById("site-footer"); if (f) f.outerHTML = renderFooter();
+  document.querySelectorAll("[data-cta]").forEach(function (el) { el.innerHTML = renderCta(); });
 
-languageButtons.forEach((button) => button.addEventListener("click", () => applyLanguage(button.dataset.lang)));
-applyLanguage(localStorage.getItem("qerivo-language") || "en");
-
-menuToggle?.addEventListener("click", () => {
-  const isOpen = nav.classList.toggle("mobile-open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-});
-
-document.querySelectorAll(".nav-links a").forEach((link) => {
-  link.addEventListener("click", () => nav.classList.remove("mobile-open"));
-});
-
-function addMessage(text, type) {
-  const message = document.createElement("div");
-  message.className = `message ${type}`;
-  message.textContent = text;
-  const time = document.createElement("span");
-  time.className = "message-time";
-  time.textContent = "just now";
-  message.appendChild(time);
-  messages.appendChild(message);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-form?.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const message = input.value.trim();
-  if (!message) return;
-
-  addMessage(message, "sent");
-  input.value = "";
-  input.disabled = true;
-  status.textContent = "Qerivo is thinking…";
-
-  try {
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message, language: localStorage.getItem("qerivo-language") || "en" }),
+  /* ---------- apply language ---------- */
+  function apply() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      el.innerHTML = t(el.getAttribute("data-i18n"));
     });
-    if (!response.ok) throw new Error("The chat service returned an error.");
-    const data = await response.json();
-    addMessage(data.reply, "received");
-    status.textContent = translations[localStorage.getItem("qerivo-language") || "en"].status;
-  } catch (error) {
-    addMessage("The demo is temporarily unavailable. Please try again in a moment.", "received");
-    status.textContent = "Unable to reach the API";
-  } finally {
-    input.disabled = false;
-    input.focus();
+    document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+      el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph")));
+    });
+    document.querySelectorAll("[data-i18n-label]").forEach(function (el) {
+      el.setAttribute("aria-label", t(el.getAttribute("data-i18n-label")));
+    });
+    var tk = document.body.getAttribute("data-title");
+    if (tk) document.title = t(tk);
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.classList.toggle("on", b.getAttribute("data-lang") === lang);
+    });
+    if (window.QerivoDemo) window.QerivoDemo.refresh();
   }
-});
+  document.querySelectorAll(".lang button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      lang = b.getAttribute("data-lang");
+      try { localStorage.setItem("qerivo-lang", lang); } catch (e) {}
+      apply();
+    });
+  });
+
+  /* ---------- mobile menu ---------- */
+  var nav = document.querySelector(".nav");
+  var menuBtn = document.querySelector(".menu-btn");
+  if (nav && menuBtn) {
+    menuBtn.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+  }
+
+  /* ---------- hero video ---------- */
+  var video = document.querySelector(".video-shell video");
+  if (video) {
+    video.muted = true;
+    var p = video.play();
+    if (p && p.catch) p.catch(function () {});
+    video.addEventListener("error", function () { video.style.display = "none"; }, true);
+  }
+
+  /* ---------- demo chat ---------- */
+  var body = document.getElementById("chat-body");
+  if (body) {
+    var form = document.getElementById("chat-form");
+    var input = document.getElementById("chat-input");
+    var chips = document.getElementById("chips");
+    var history = [{ who: "ai", key: "demo.first" }];
+    var busy = false;
+
+    function bubble(m) {
+      var d = document.createElement("div");
+      d.className = "msg " + (m.who === "me" ? "me" : "ai");
+      d.textContent = m.key ? t(m.key) : m.text;
+      d.dataset.key = m.key || "";
+      return d;
+    }
+    function scroll() { body.scrollTop = body.scrollHeight; }
+    function draw() {
+      body.innerHTML = "";
+      history.forEach(function (m) { body.appendChild(bubble(m)); });
+      scroll();
+    }
+    function typing(on) {
+      var old = body.querySelector(".typing");
+      if (old) old.remove();
+      if (on) {
+        var d = document.createElement("div");
+        d.className = "msg ai typing"; d.innerHTML = "<i></i><i></i><i></i>";
+        body.appendChild(d); scroll();
+      }
+    }
+    function send(text) {
+      text = (text || "").trim();
+      if (!text || busy) return;
+      busy = true;
+      history.push({ who: "me", text: text });
+      body.appendChild(bubble(history[history.length - 1]));
+      input.value = ""; typing(true);
+      var started = Date.now();
+      function done(reply) {
+        var wait = Math.max(0, 700 - (Date.now() - started));
+        setTimeout(function () {
+          typing(false);
+          var m = reply ? { who: "ai", text: reply } : { who: "ai", key: "demo.fail" };
+          history.push(m); body.appendChild(bubble(m)); scroll(); busy = false;
+        }, wait);
+      }
+      fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, language: lang })
+      }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (d) { done(d.reply); })
+        .catch(function () { done(null); });
+    }
+    form.addEventListener("submit", function (e) { e.preventDefault(); send(input.value); });
+    chips.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { send(t(b.getAttribute("data-i18n"))); });
+    });
+    window.QerivoDemo = {
+      refresh: function () {
+        // re-translate only scripted messages; keep what the user typed
+        body.querySelectorAll(".msg[data-key]").forEach(function (el) {
+          if (el.dataset.key) el.textContent = t(el.dataset.key);
+        });
+      }
+    };
+    draw();
+  }
+
+  /* ---------- contact form (opens the email app) ---------- */
+  var lead = document.getElementById("lead-form");
+  if (lead) {
+    lead.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = function (id) { return (document.getElementById(id).value || "").trim(); };
+      var bodyText = "Name: " + v("f-name") + "\nClinic: " + v("f-clinic") + "\nWhatsApp/phone: " + v("f-phone") + "\n\n" + v("f-msg");
+      document.getElementById("form-status").textContent = t("con.ok");
+      window.location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Qerivo demo — " + v("f-clinic")) + "&body=" + encodeURIComponent(bodyText);
+    });
+  }
+
+  apply();
+})();

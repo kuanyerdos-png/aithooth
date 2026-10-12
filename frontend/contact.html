@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book a demo — Qerivo</title>
+<meta name="description" content="Book a Qerivo demo for your dental clinic." />
+<link rel="icon" href="assets/qerivo-logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-page="contact" data-title="con.title">
+<div id="site-header"></div>
+<main>
+<section class="container hero">
+<div>
+<div class="eyebrow" data-i18n="con.eyebrow"></div>
+<h1 data-i18n="con.h1" style="font-size:clamp(32px,4vw,50px)"></h1>
+<p class="sub" data-i18n="con.p"></p>
+<div class="card" style="margin-top:32px;max-width:460px"><h3 data-i18n="con.side.h3" style="margin-top:0"></h3><p data-i18n="con.side.p"></p><p style="margin-top:10px"><a class="link" href="mailto:hello@qerivo.ai">hello@qerivo.ai</a></p></div>
+</div>
+<form class="card form" id="lead-form" style="padding:32px">
+<div class="field"><label for="f-name" data-i18n="con.name"></label><input id="f-name" required autocomplete="name" /></div>
+<div class="field"><label for="f-clinic" data-i18n="con.clinic"></label><input id="f-clinic" required /></div>
+<div class="field"><label for="f-phone" data-i18n="con.phone"></label><input id="f-phone" required autocomplete="tel" /></div>
+<div class="field"><label for="f-msg" data-i18n="con.msg"></label><textarea id="f-msg"></textarea></div>
+<button class="btn btn-primary" type="submit" style="width:100%"><span data-i18n="con.submit"></span> ↗</button>
+<div class="form-note" id="form-status" data-i18n="con.note"></div>
+</form>
+</section>
+</main>
+<div id="site-footer"></div>
+<script src="js/i18n.js?v=2"></script>
+<script src="js/app.js?v=2"></script>
+</body>
+</html>
